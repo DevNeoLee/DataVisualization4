@@ -60,6 +60,7 @@
             display: flex;
             justify-content: space-around;
             align-items: center;
+            text-align: center;
             grid-area: 6 /1 / 7/ 5;
             /* background-color: lightblue; */
             font-size: 1.5rem;
@@ -68,7 +69,10 @@
           footer a {
             text-decoration: none;
           }
-
+          footer .statisticsCanada {
+            text-align: center;
+            align-items: center;
+          }
           footer .iconify {
             width: 30px;
           }
