@@ -12,11 +12,11 @@
               justify-self: center;
               justify-content: center;
               /* justify-items: center; */
-              padding: 2rem;
+              margin: 4 2 0 2rem;
               height: 100vh;
               display: grid;
               grid-template-columns: 1fr 1fr 1fr 1.5fr;
-              grid-template-rows: 1.7fr 0.8fr 1fr 1fr 0.5fr 1fr;
+              grid-template-rows: 1.7fr 0.8fr 1fr 1fr 0.5fr 0.7fr;
           }
 
           span.info {
@@ -25,6 +25,7 @@
               /* background-color: lightpink; */
               z-index: 1;
               font-family: 'Comic Neue', cursive;
+              line-height: 1.5;
           }
 
           .barWrap {
@@ -56,9 +57,22 @@
           }
 
           footer {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
             grid-area: 6 /1 / 7/ 5;
-            background-color: lightblue;
+            /* background-color: lightblue; */
+            font-size: 1.5rem;
           }
+
+          footer a {
+            text-decoration: none;
+          }
+
+          footer .iconify {
+            width: 30px;
+          }
+
           /* specific properties */
         span.info {
             text-align: center;
@@ -93,8 +107,8 @@
         
         /*bar-chart */
         .barAxisText {
-          font-size: 0.9rem;
-          fill: darkgray;
+          font-size: 1rem;
+          /* fill: darkgray; */
         }
 
         .select {

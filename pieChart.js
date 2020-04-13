@@ -3,13 +3,13 @@ export function pieChart(data){
 
     const canvas3 = d3.select(".pieWrap")
             .append('svg')
-            .attr('width', 300)
+            .attr('width', 345)
             .attr('height',220)
             .attr('class', 'canvas3');
 
      const radius = 100;
 
-     const g = canvas3.append("g").attr("transform", "translate(187, 108)");
+     const g = canvas3.append("g").attr("transform", "translate(230, 108)");
 
     const color = d3.scaleOrdinal(d3.schemePastel2);
 

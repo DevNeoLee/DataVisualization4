@@ -6,7 +6,7 @@ export function mapChart(data) {
     const canvas2 = d3.select('.mapWrap')
         .append('svg')
         .attr('width', '750')
-        .attr('height', '500')
+        .attr('height', '530')
         .attr('class', 'canvas2');
 
     //define yScale
@@ -29,7 +29,7 @@ export function mapChart(data) {
 
         const projection = d3.geoMercator()
             .scale([420])
-            .translate([1060, 840]);
+            .translate([1090, 869]);
 
         const path = d3.geoPath()
             .projection(projection);
