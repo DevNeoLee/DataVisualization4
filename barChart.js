@@ -88,7 +88,7 @@ export function barChart(data) {
         .attr('transform', 'translate( 80, 460)')
         .call(xAxis)
         .selectAll('text')
-        .style('font-size', '0.9rem')
+        .attr('class', 'barAxisText')
         .attr('transform', 'rotate(90)')
         .style('text-anchor', 'start');
 

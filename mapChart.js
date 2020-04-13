@@ -7,7 +7,7 @@ export function mapChart(data) {
         .append('svg')
         .attr('width', '750')
         .attr('height', '500')
-        .attr('class', 'map-chart');
+        .attr('class', 'canvas2');
 
     //define yScale
     const yScale = d3.scaleSqrt()

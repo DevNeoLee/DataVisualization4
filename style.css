@@ -4,47 +4,67 @@
               margin: 0;
               padding: 0;
               box-sizing: border-box;
+              font-family: 'Comic Neue', cursive;
           }
-
+      
           .container {
-              width: 100%;
+              width: 90% auto;
+              justify-self: center;
+              justify-content: center;
+              /* justify-items: center; */
+              padding: 2rem;
               height: 100vh;
               display: grid;
-              grid-template-columns: 1.8fr 1fr 1fr;
-              grid-template-rows: 2fr 1fr 1.9fr;
+              grid-template-columns: 1fr 1fr 1fr 1.5fr;
+              grid-template-rows: 1.7fr 0.8fr 1fr 1fr 0.5fr 1fr;
           }
+
+          span.info {
+              display: block;
+              grid-area: 1 / 2 / 2 / 3;
+              /* background-color: lightpink; */
+              z-index: 1;
+              font-family: 'Comic Neue', cursive;
+          }
+
           .barWrap {
-            grid-area: 1 /1 /4 /2;
-            /* background-color: lightsalmon; */
+            grid-area: 1 /1 /6 /3;
+            /* background-color: lightsalmon;  */
+            z-index: 0;
           }
 
           .mapWrap {
-            grid-area: 1 /2 /3 /4;
+            grid-area: 1 /3 /5 /5;
             /* background-color: lightblue; */
           }
 
           .pieWrap {
-            grid-area: 3 /2 /4 /3;
-            /* background-color: lightgreen; */
-          
+            grid-area: 2/ 2/ 4/ 3;
+            /* background-color: lightgreen;  */
+            float: right;
+            z-index: 2;
           }
 
           .controlWrap {    
-            grid-area: 3 /3 /4 /4;
-            align-items: top;
-            display: flex;
+            grid-area: 5 /2 /6 /5;
+            align-items: center;
             /* background-color: lightpink; */
-            padding-top: 2rem;
+            display: flex;
+            text-align: center;
+            padding: 2rem;
+            margin-left: 12rem;
           }
 
-          .barGroup {
-/
+          footer {
+            grid-area: 6 /1 / 7/ 5;
+            background-color: lightblue;
           }
-
           /* specific properties */
-        h1 {
+        span.info {
             text-align: center;
             margin: 1rem;
+            font-size: 30px;
+            z-index: 0;
         }
  
         div.tooltip {
@@ -58,6 +78,7 @@
             pointer-events: none;
             font-size: 15px;
             line-height: 1.5;
+            z-index: 100;
         }
 
         .province {
@@ -71,21 +92,25 @@
         }
         
         /*bar-chart */
-
+        .barAxisText {
+          font-size: 0.9rem;
+          fill: darkgray;
+        }
 
         .select {
-            font-size: 1.4rem;
+            font-size: 1.2rem;
             background-color: DodgerBlue;
             color: white;
-            width: 6rem;
-            height: 3rem;
+            width: 4.5rem;
+            height: 2.5rem;
+            z-index: 1;
         }
 
         .monthDisplay {
             /* margin: 1rem; */
             width: 4rem;
             height: 2.5rem;
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             background-color: #eeeeee;
             line-height: 2;
             text-align: center;
@@ -94,9 +119,10 @@
         }
 
         .slider {
-            padding: 0.5rem;
+        
             font-size: 1.5rem;
-            width: 10rem;
+            width: 15rem;
+            align-self: center;
 
         }
 

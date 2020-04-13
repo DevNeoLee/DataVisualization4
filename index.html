@@ -9,19 +9,19 @@
     <script src="https://d3js.org/d3-color.v1.min.js"></script>
     <script src="https://d3js.org/d3-interpolate.v1.min.js"></script>
     <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/3.0.2/topojson.min.js"></script> -->
+<link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@300&family=Shrikhand&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
    
 </head>
 
 
 <body>
-        <h1>Travelers from Overseas to Canada (2000 - 2019)</h1>
+        
         <div class="container">
+            <span class="info"></span>
             <div class="barWrap">
             </div>
             <div class="mapWrap">
-                <div class="tooltip"></div>
             </div>
             <div class="pieWrap">
             </div>
@@ -37,14 +37,26 @@
                     <option value="12">2012</option>
                     <option value="11">2011</option>
                     <option value="10">2010</option>
+                    <option value="9">2009</option>
+                    <option value="8">2008</option>
+                    <option value="7">2007</option>
+                    <option value="6">2006</option>
+                    <option value="5">2005</option>
+                    <option value="4">2004</option>
+                    <option value="3">2003</option>
+                    <option value="2">2002</option>
+                    <option value="1">2001</option>
+                    <option value="0">2000</option>
                 </select>
                 <div class="monthDisplay">Jan</div>
                 <div class="slideContainer">
                     <input type="range" min="1" max="12" value="1" step="1" class="slider" id="myRange">
-                    <p>months</p>
                 </div>
         
             </div>
+            <footer>
+                <nav>credit by Justin K Lee</nav>
+            </footer>
         </div>
 
         <!-- <script type="module" src="travelData.js"></script> -->

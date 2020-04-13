@@ -3,12 +3,13 @@ export function pieChart(data){
 
     const canvas3 = d3.select(".pieWrap")
             .append('svg')
-            .attr('width', 280)
-            .attr('height',280);
+            .attr('width', 300)
+            .attr('height',220)
+            .attr('class', 'canvas3');
 
-     const radius = 135;
+     const radius = 100;
 
-     const g = canvas3.append("g").attr("transform", "translate(140,140)");
+     const g = canvas3.append("g").attr("transform", "translate(187, 108)");
 
     const color = d3.scaleOrdinal(d3.schemePastel2);
 
@@ -17,7 +18,7 @@ export function pieChart(data){
 
     // Generate the arcs
     const arc = d3.arc()
-        .innerRadius(40)
+        .innerRadius(35)
         .outerRadius(radius);
 
     //Generate groups
@@ -28,8 +29,8 @@ export function pieChart(data){
         .attr("class", "arc");
         
     const arcOver = d3.arc()
-        .innerRadius(35)
-        .outerRadius(140);     
+        .innerRadius(30)
+        .outerRadius(110);     
     
     const pieTooltip = d3.select("body").append("div")
         .attr("class", "tooltip")
@@ -55,7 +56,7 @@ export function pieChart(data){
         .on("mouseout", function (d) {
             d3.select(this).transition()
                 .duration(0)
-                .attr("d", d3.arc().innerRadius(40).outerRadius(135))
+                .attr("d", d3.arc().innerRadius(35).outerRadius(100))
                 .style('opacity', '1.0');
             pieTooltip.transition()
                 .duration(0)
@@ -82,13 +83,6 @@ export function pieChart(data){
     //     .attr('fill', 'darkgray');
     
 }
-
-
-
-
-
-
-
 
 //mouseout event handler function
 function onMouseOut(d) {
