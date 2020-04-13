@@ -29,7 +29,7 @@ export function mapChart(data) {
 
         const projection = d3.geoMercator()
             .scale([420])
-            .translate([1090, 869]);
+            .translate([1070, 869]);
 
         const path = d3.geoPath()
             .projection(projection);
