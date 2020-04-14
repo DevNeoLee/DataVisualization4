@@ -1,9 +1,11 @@
-//load raw CSV data, and call travelData method
-import { travelData } from './travelData.js';
 
-d3.csv('data/travel_to_canada_province.csv', function(data) {
-    const newArr = [];
+//load raw CSV, travel_province_data using D3.js
+//prepare only relavant data set array of objects
+//initiate putting minimized data cut with default or listened event input
+import { putData } from './put_data.js';
 
+d3.csv('data/travel_province_data.csv', function(data) {
+    const initialDataCut = [];
         data.forEach((ele) => {
             if ((ele.GEO == "Newfoundland and Labrador" ||
                 ele.GEO == "Prince Edward Island" ||
@@ -21,42 +23,39 @@ d3.csv('data/travel_to_canada_province.csv', function(data) {
                 (ele['Seasonal adjustment'] == "Unadjusted") &&
                 (ele.REF_DATE[0] == '2'))
              {
-                newArr.push(ele);
+                initialDataCut.push(ele);
             }
         });
 
-        //selection input value eventlistener for 'change'
-document.querySelector('.select').addEventListener("change", function () {
+//eventListener for 'year' data input
+//send data to 'putData' method
+document.querySelector('.select').addEventListener("change", function () {  
     
-    // current canvas2 delete first
+    //firstly delete previous data 
     d3.selectAll("svg")
         .remove();
-    //current canvas3 delete before next 
-   
-    travelData(newArr, document.querySelector('.select').value, document.querySelector('.slider').value);
-
+    
+    //call putData method
+    putData(initialDataCut, document.querySelector('.select').value, document.querySelector('.slider').value);
 });
 
 const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-//range slider input
+
+//eventListner for 'month' data input
+//send dat to 'putData' method
 document.querySelector('.slider').addEventListener("change", function () {
     const value = document.querySelector('.slider').value;
     document.querySelector('.monthDisplay').innerText = months[value - 1];
-
+    
+    //firstly delete previous data 
     d3.selectAll("svg")
         .remove();
-
-    travelData(newArr, document.querySelector('.select').value, value);
-});
-
-// //default value with the data of 2019 Jan when the webpage initializes
-// displayOnMap(monthlyData(17, 1));//////////testing///////////
-
-       travelData(newArr);
-       
-});
-
     
-// };
+    //call putData method
+    putData(initialDataCut, document.querySelector('.select').value, value);
+});
+    
+    //call initial default drawing with default data 
+    putData(initialDataCut); 
+});
 
-// console.log(newArray());

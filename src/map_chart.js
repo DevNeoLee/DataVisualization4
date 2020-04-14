@@ -20,7 +20,7 @@ export function mapChart(data) {
         .range(d3.schemePastel2);
 
     // drawing canadian map from topojson data from statistics canada
-    d3.json("data/canadaProvinces.json", (d => {
+    d3.json("data/province_map_topo.json", (d => {
         const provinces = canvas2.selectAll('g')
             .data(d.features)
             .enter()

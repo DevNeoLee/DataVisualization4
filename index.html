@@ -10,66 +10,58 @@
     <script src="https://d3js.org/d3-interpolate.v1.min.js"></script>
     <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@300&family=Shrikhand&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
-    <link rel="icon" href="image/bluePlane.svg">
-    <script src="https://code.iconify.design/1/1.0.5/iconify.min.js"></script>
+    <link rel="stylesheet" href="stylesheets/style.css">
+    <link rel="icon" href="image/blueplane_icon.svg">
 </head>
-
-
-<body>
-        
-        <div class="container">
-            <span class="info"></span>
-            <div class="barWrap">
-            </div>
-            <div class="mapWrap">
-            </div>
-            <div class="pieWrap">
-            </div>
-            <div class="controlWrap">
-                <select id="year" name="year" class="select">
-                    <option value="19">2019</option>
-                    <option value="18">2018</option>
-                    <option value="17">2017</option>
-                    <option value="16">2016</option>
-                    <option value="15">2015</option>
-                    <option value="14">2014</option>
-                    <option value="13">2013</option>
-                    <option value="12">2012</option>
-                    <option value="11">2011</option>
-                    <option value="10">2010</option>
-                    <option value="9">2009</option>
-                    <option value="8">2008</option>
-                    <option value="7">2007</option>
-                    <option value="6">2006</option>
-                    <option value="5">2005</option>
-                    <option value="4">2004</option>
-                    <option value="3">2003</option>
-                    <option value="2">2002</option>
-                    <option value="1">2001</option>
-                    <option value="0">2000</option>
-                </select>
-                <div class="monthDisplay">Jan</div>
-                <div class="slideContainer">
-                    <input type="range" min="1" max="12" value="1" step="1" class="slider" id="myRange">
-                </div>
-        
-            </div>
-            <footer>
-                <div class="statisticsCanada">
-                    <!-- Canada Flag Icon by https://www.iconfinder.com/Flatart  -->
-                    <p>Data Source:<a href="https://www.statcan.gc.ca/eng/developers" target="_blank"> Statistics Canada <img src="image/maple_icon.png" width="20px"/></a></p>
-                </div>
-                <nav>
-                    <div class="credit"><a href="https://devneolee.github.io/JustinKLee/" target="_blank">© Justin K Lee. <img width="20px" src="image/bluePlane.svg"> </a> All rights reserved.</div>
-                </nav>
-                <div class="site">
-                <div><a href="https://github.com/DevNeoLee/DataVisualization4"  target="_blank"> Github <img src="image/git_icon.png" width="20px"></a></div>
-
-            </footer>
+<body>  
+    <div class="container">
+        <span class="info"></span>
+        <div class="barWrap">
         </div>
-
-        <!-- <script type="module" src="travelData.js"></script> -->
-        <script type="module" src="dataUseful.js"></script>
+        <div class="mapWrap">
+        </div>
+        <div class="pieWrap">
+        </div>
+        <div class="controlWrap">
+            <select id="year" name="year" class="select">
+                <option value="19">2019</option>
+                <option value="18">2018</option>
+                <option value="17">2017</option>
+                <option value="16">2016</option>
+                <option value="15">2015</option>
+                <option value="14">2014</option>
+                <option value="13">2013</option>
+                <option value="12">2012</option>
+                <option value="11">2011</option>
+                <option value="10" selected="selected">2010</option>
+                <option value="9">2009</option>
+                <option value="8">2008</option>
+                <option value="7">2007</option>
+                <option value="6">2006</option>
+                <option value="5">2005</option>
+                <option value="4">2004</option>
+                <option value="3">2003</option>
+                <option value="2">2002</option>
+                <option value="1">2001</option>
+                <option value="0">2000</option>
+            </select>
+            <div class="monthDisplay">Jul</div>
+            <div class="slideContainer">
+                <input type="range" min="1" max="12" value="7" step="1" class="slider" id="myRange">
+            </div>
+        </div>
+        <footer>
+            <div class="statisticsCanada">
+                <!-- Canada Flag Icon by https://www.iconfinder.com/Flatart  -->
+                <p>Data Source:<a href="https://www.statcan.gc.ca/eng/developers" target="_blank"> Statistics Canada <img src="image/canada_maple_icon.png" width="20px"/></a></p>
+            </div>
+            <div>
+                <div class="credit"><a href="https://devneolee.github.io/JustinKLee/" target="_blank">© Justin K Lee. <img width="20px" src="image/blueplane_icon.svg"> </a> All Rights Reserved</div>
+            </div>
+            <div class="site">
+            <div><a href="https://github.com/DevNeoLee/DataVisualization4"  target="_blank"> Github <img src="image/git_icon.png" width="20px"></a></div>
+        </footer>
+    </div>
+    <script type="module" src="src/main.js"></script>
 </body>
 </html>
