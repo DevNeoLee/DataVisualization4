@@ -1,4 +1,4 @@
-
+//draw map_chart with monthly data sent
 export function mapChart(data) {
     data.push({ REF_DATE: data[0].REF_DATE, GEO: "Northwest Territories", VALUE: "0" }); // adding missing data for 'Northwest Territories" to the data array
     const dataSorted = [data[1], data[2], data[10], data[11], data[7], data[9], data[4], data[0], data[5], data[12], data[3], data[8], data[6]];

@@ -1,101 +1,79 @@
-
-export function pieChart(data){
-
+//draw pieChart with the monthly data set
+export function pieChart(data, totalVisitor){
+    
+    //draw canvas 
     const canvas3 = d3.select(".pieWrap")
             .append('svg')
             .attr('width', 345)
             .attr('height',220)
-            .attr('class', 'canvas3');
+            .attr('class', 'canvas3')
+            .append('g')
+            .attr('transform', "translate(230, 108)");
 
-     const radius = 100;
+    //variable for pie
+    const color = d3.scaleOrdinal(d3.schemePastel2),
+          radius = 100;
 
-     const g = canvas3.append("g").attr("transform", "translate(230, 108)");
+    const pieTooltip = d3.select("body").append("div")
+        .attr("class", "tooltip")
+        .style("opacity", 0);
 
-    const color = d3.scaleOrdinal(d3.schemePastel2);
+    //generate pie
+    const pie = d3.pie()
+        .value(d => +d.VALUE);
 
-    // Generate the pie
-    const pie = d3.pie().value(d => +d.VALUE);
-
-    // Generate the arcs
+    //generate arcs
     const arc = d3.arc()
         .innerRadius(35)
         .outerRadius(radius);
+    const arcLarge = d3.arc()
+        .innerRadius(30)
+        .outerRadius(110);     
 
-    //Generate groups
-    const arcs = g.selectAll("arc")
+    //generate arcs
+    const arcs = canvas3.selectAll("arc")
         .data(pie(data))
         .enter()
         .append("g")
         .attr("class", "arc");
         
-    const arcOver = d3.arc()
-        .innerRadius(30)
-        .outerRadius(110);     
-    
-    const pieTooltip = d3.select("body").append("div")
-        .attr("class", "tooltip")
-        .style("opacity", 0);
-
-    //Draw arc paths
+    //draw arc path
     arcs.append("path")
         .attr("d", arc)
         .attr("fill", function (d, i) { return color(i); })
         .on("mouseover", function (d) {
                 d3.select(this).transition()
                     .duration(0)
-                    .attr("d", arcOver)
-                    .style('opacity', '0.8')
-
+                    .attr("d", arcLarge)
+                    .style('opacity', '0.5')
                 pieTooltip.transition()
                     .duration(0)
-                    .style("opacity", '0.7');
-                pieTooltip.html(d.data.GEO + " in " + d.data.REF_DATE + "<br/>" + "tourists from overseas: " + d.data.VALUE + " persons")
+                    .style("opacity", '0.9');
+            pieTooltip.html(d.data.GEO + " in " + d.data.REF_DATE + "<br/>" + "tourists from overseas: " + d.data.VALUE + " persons" + "<br/>" + Math.round(d.data.VALUE / totalVisitor * 100) + "%")
                     .style("left", (d3.event.pageX + 5) + "px")
                     .style("top", (d3.event.pageY - 100) + "px")
             })
         .on("mouseout", function (d) {
             d3.select(this).transition()
                 .duration(0)
-                .attr("d", d3.arc().innerRadius(35).outerRadius(100))
+                .attr("d", arc)
                 .style('opacity', '1.0');
             pieTooltip.transition()
                 .duration(0)
                 .style("opacity", 0);
         });
 
-    // arcs.append('text')
-    //     .attr('transform', function (d) {
-    //         var c = arc.centroid(d);
-    //         return "translate(" + c[0] + "," + c[1] + ")"; 
-    //     })
-    //     .text(function (d) { return d.data.GEO; });
-
-    // const labels = canvas3.selectAll('pie')
-    //     .data(data)
-  
-    //     .append('text')
-    //     .text(d => parseInt(d.VALUE))
-    //     // .attr('transform', function (d) {
-    //     //     var c = arc.centroid(d);
-    //     //     console.log(c);
-    //     //     return "translate(" + c[0] + "," + c[1] + ")";
-    //     // })
-    //     .attr('fill', 'darkgray');
-    
+    arcs.append('text')
+        .attr('transform', function (d) {
+            var c = arc.centroid(d);
+            return "translate(" + c[0] + "," + c[1] + ")"; 
+        })
+        .text(function (d) { return Math.round(d.data.VALUE / totalVisitor * 100) + "%"; });
 }
 
 //mouseout event handler function
 function onMouseOut(d) {
-    // d3.select(this).attr('class', 'bar');
-    // d3.select(this)
-    //     .transition()     // adds animation
-    //     .duration(400)
-    //     .attr('width', x.bandwidth())
-    //     .attr("y", function (d) { return y(d.value); })
-    //     .attr("height", function (d) { return height - y(d.value); });
-
     d3.selectAll('div.tooltip')
         .style('opacity', 0);
-
 }
 

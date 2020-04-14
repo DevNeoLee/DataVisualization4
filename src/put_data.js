@@ -17,14 +17,15 @@ export const putData = (data, year = 10, month = 7) => {
         }
     const sortedMonthlyData = monthlyData.sort(function(b, a){ return parseInt(a.VALUE) - parseInt(b.VALUE)});
     
-    //call charts drawing with sorted monthly data
-    barChart(sortedMonthlyData);
-    pieChart(sortedMonthlyData);
-    mapChart(sortedMonthlyData);
-    
     // calculate the total # of visitors to Canada on the month data
     const totalVisitor = sortedMonthlyData.reduce((a, b) => (a + parseInt(b.VALUE)), 0);
+
+    //call charts drawing with sorted monthly data
+    barChart(sortedMonthlyData);
+    pieChart(sortedMonthlyData, totalVisitor);
+    mapChart(sortedMonthlyData);
     
+   
     // write site main title with specific visitor info for the month
     d3.selectAll('.spanText').remove();
     d3.select('span.info').append('g')
