@@ -41,27 +41,8 @@ export function pieChart(data, totalVisitor){
     arcs.append("path")
         .attr("d", arc)
         .attr("fill", function (d, i) { return color(i); })
-        .on("mouseover", function (d) {
-                d3.select(this).transition()
-                    .duration(0)
-                    .attr("d", arcLarge)
-                    .style('opacity', '0.5')
-                pieTooltip.transition()
-                    .duration(0)
-                    .style("opacity", '0.9');
-            pieTooltip.html(d.data.GEO + " in " + d.data.REF_DATE + "<br/>" + "tourists from overseas: " + d.data.VALUE + " persons" + "<br/>" + Math.round(d.data.VALUE / totalVisitor * 100) + "%")
-                    .style("left", (d3.event.pageX + 5) + "px")
-                    .style("top", (d3.event.pageY - 100) + "px")
-            })
-        .on("mouseout", function (d) {
-            d3.select(this).transition()
-                .duration(0)
-                .attr("d", arc)
-                .style('opacity', '1.0');
-            pieTooltip.transition()
-                .duration(0)
-                .style("opacity", 0);
-        });
+        .on("mouseover", onMouseover)
+        .on("mouseout", onMouseout);
 
     arcs.append('text')
         .attr('transform', function (d) {
@@ -69,11 +50,30 @@ export function pieChart(data, totalVisitor){
             return "translate(" + c[0] + "," + c[1] + ")"; 
         })
         .text(function (d) { return Math.round(d.data.VALUE / totalVisitor * 100) + "%"; });
+
+//mouseover event handler function
+function onMouseover(d) {
+    d3.select(this).transition()
+        .duration(0)
+        .attr("d", arcLarge)
+        .style('opacity', '0.5')
+    pieTooltip.transition()
+        .duration(0)
+        .style("opacity", '0.9');
+    pieTooltip.html(d.data.GEO + " in " + d.data.REF_DATE + "<br/>" + "tourists from overseas: " + d.data.VALUE + " persons" + "<br/>" + Math.round(d.data.VALUE / totalVisitor * 100) + "%")
+        .style("left", (d3.event.pageX + 5) + "px")
+        .style("top", (d3.event.pageY - 100) + "px")
 }
 
 //mouseout event handler function
-function onMouseOut(d) {
-    d3.selectAll('div.tooltip')
-        .style('opacity', 0);
+function onMouseout(d) {
+    d3.select(this).transition()
+        .duration(0)
+        .attr("d", arc)
+        .style('opacity', '1.0');
+    pieTooltip.transition()
+        .duration(0)
+        .style("opacity", 0);
 }
 
+}
