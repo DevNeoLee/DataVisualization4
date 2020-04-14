@@ -37,43 +37,76 @@ export function pieChart(data, totalVisitor){
         .append("g")
         .attr("class", "arc");
         
-    //draw arc path
-    arcs.append("path")
-        .attr("d", arc)
+    //draw arcs
+    //add animation effect of path
+    const pieces = arcs
+        .append('g')
+        .append('path')
+        .attr('class', 'piece')
+        .attr('d', arc)
         .attr("fill", function (d, i) { return color(i); })
-        .on("mouseover", onMouseover)
-        .on("mouseout", onMouseout);
+        .transition()
+        .ease(d3.easeLinear)
+        .duration(400)
+        .attrTween('d', pieTween);
 
-    arcs.append('text')
+    //listen actions of mouseover, mouseout
+    d3.selectAll('.piece') //listener for mouseover, mouseout on bars
+        .on("mouseover", onMouseover)
+        .on("mouseout", onMouseout); 
+
+    //add text of percentile of province visitors
+    const text = arcs
+        .append('g')
+        .append('text')
+        .transition()
+        .ease(d3.easeLinear)
+        .duration(350)
         .attr('transform', function (d) {
             var c = arc.centroid(d);
-            return "translate(" + c[0] + "," + c[1] + ")"; 
+            return "translate(" + (c[0]-14) + "," + c[1] + ")";
         })
-        .text(function (d) { return Math.round(d.data.VALUE / totalVisitor * 100) + "%"; });
+        .text(function (d) { //only show distint value of province 
+            const percentage = Math.round(d.data.VALUE / totalVisitor * 100);
 
-//mouseover event handler function
-function onMouseover(d) {
-    d3.select(this).transition()
-        .duration(0)
-        .attr("d", arcLarge)
-        .style('opacity', '0.5')
-    pieTooltip.transition()
-        .duration(0)
-        .style("opacity", '0.9');
-    pieTooltip.html(d.data.GEO + " in " + d.data.REF_DATE + "<br/>" + "tourists from overseas: " + d.data.VALUE + " persons" + "<br/>" + Math.round(d.data.VALUE / totalVisitor * 100) + "%")
-        .style("left", (d3.event.pageX + 5) + "px")
-        .style("top", (d3.event.pageY - 100) + "px")
-}
+            return percentage > 3 ? (percentage + "%") : null;
+        })
+        .attr('class', 'text');
 
-//mouseout event handler function
-function onMouseout(d) {
-    d3.select(this).transition()
-        .duration(0)
-        .attr("d", arc)
-        .style('opacity', '1.0');
-    pieTooltip.transition()
-        .duration(0)
-        .style("opacity", 0);
-}
+    //add actionListener to text on centroid
+    d3.selectAll('text')
+        .on("mouseover", onMouseover)
+        .on("mouseout", onMouseout); 
 
+    //mouseover event handler function
+    function onMouseover(d) {
+        d3.select(this).transition()
+            .duration(0)
+            .attr("d", arcLarge)
+            .style('opacity', '0.5')
+        pieTooltip.transition()
+            .duration(0)
+            .style("opacity", '0.9');
+        pieTooltip.html(d.data.GEO + " in " + d.data.REF_DATE + "<br/>" + "tourists from overseas: " + d.data.VALUE + " persons" + "<br/>" + Math.round(d.data.VALUE / totalVisitor * 100) + "%")
+            .style("left", (d3.event.pageX + 5) + "px")
+            .style("top", (d3.event.pageY - 100) + "px")
+    }
+
+    //mouseout event handler function
+    function onMouseout(d) {
+        d3.select(this).transition()
+            .duration(0)
+            .attr("d", arc)
+            .style('opacity', '1.0');
+        pieTooltip.transition()
+            .duration(0)
+            .style("opacity", 0);
+    }
+
+    //pieTween animation arc function
+   function pieTween(b) {
+        b.innerRadius = 0;
+        const inter = d3.interpolate({startAngle: 0, endAngle: 0}, b);
+        return function(t) { return arc(inter(t));};
+   }
 }

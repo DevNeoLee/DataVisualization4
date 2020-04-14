@@ -83,11 +83,6 @@ export function barChart(data) {
         .attr('x', (d, i) => (106 + barWidth * i))
         .attr('fill', 'darkgray');
 
-    d3.selectAll('.label')//listener mouseover, mouseout on labels
-        .data(data)
-        .on("mouseover", onMouseOver) 
-        .on("mouseout", onMouseOut); 
-
     //append xAxis
     canvas1.append('g')
         .attr('class', 'x_axis')
@@ -109,7 +104,7 @@ const div = d3.select("body").append("div") //tooptip initial container
     .attr("class", "tooltip")
     .style("opacity", 0);
 
-//mouseOver event of bars
+//mouseover event to bar chart
 function onMouseOver(d, i) {
     d3.select(this).transition()
         .duration(0)
@@ -124,7 +119,7 @@ function onMouseOver(d, i) {
         .style("top", (d3.event.pageY - 100) + "px");
 }
 
-//mouseOut event of bars
+//mouseout event to bar chart
 function onMouseOut(d, i) {
     d3.select(this).transition()
         .duration(0)
