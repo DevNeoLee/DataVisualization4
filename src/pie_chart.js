@@ -96,5 +96,6 @@ function onMouseOut(d) {
 
     d3.selectAll('div.tooltip')
         .style('opacity', 0);
+
 }
 

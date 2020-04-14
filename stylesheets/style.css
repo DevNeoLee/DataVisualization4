@@ -1,5 +1,4 @@
-          /* general container properties */
-          
+         
   * {
       margin: 0;
       padding: 0;
@@ -39,7 +38,7 @@
   .barWrap {
     grid-area: 1 /1 /6 /3;
     /* background-color: lightsalmon;  */
-    z-index: 0;
+
   }
 
   .mapWrap {
