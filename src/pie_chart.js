@@ -87,7 +87,7 @@ export function pieChart(data, totalVisitor){
         pieTooltip.transition()
             .duration(0)
             .style("opacity", '0.9');
-        pieTooltip.html(d.data.GEO + " in " + d.data.REF_DATE + "<br/>" + "tourists from overseas: " + d.data.VALUE + " persons" + "<br/>" + Math.round(d.data.VALUE / totalVisitor * 100) + "%")
+        pieTooltip.html(d.data.GEO + " on " + d.data.REF_DATE + "<br/>" + "tourists from overseas: " + d.data.VALUE + " persons" + "<br/>" + Math.round(d.data.VALUE / totalVisitor * 100) + "%")
             .style("left", (d3.event.pageX + 5) + "px")
             .style("top", (d3.event.pageY - 100) + "px")
     }
