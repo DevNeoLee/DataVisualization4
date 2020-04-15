@@ -11,8 +11,11 @@ export function pieChart(data, totalVisitor){
             .attr('transform', "translate(230, 108)");
 
     //variable for pie
-    const color = d3.scaleOrdinal(d3.schemePastel2),
-          radius = 100;
+    const color = d3.scaleThreshold()
+        .domain([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12])
+        .range(["#4a58dd", "#2f9df5", "#27d7c4", "#4df884", "#95fb51", "#dedd32", "#ffa423", "#f65f18", "#ba2208", "#900c00", "#bf3caf", "#fe4b83"]);
+        
+    const radius = 100;
 
     const pieTooltip = d3.select("body").append("div")
         .attr("class", "tooltip")
@@ -87,7 +90,9 @@ export function pieChart(data, totalVisitor){
         pieTooltip.transition()
             .duration(0)
             .style("opacity", '0.9');
-        pieTooltip.html(d.data.GEO + " on " + d.data.REF_DATE + "<br/>" + "tourists from overseas: " + d.data.VALUE + " persons" + "<br/>" + Math.round(d.data.VALUE / totalVisitor * 100) + "%")
+        pieTooltip.html(d.data.GEO + " on " + d.data.REF_DATE + "<br/>" + 
+                                    "tourists from overseas: " + d.data.VALUE + " persons" + 
+                                    "<br/>" + Math.round(d.data.VALUE / totalVisitor * 100) + "%")
             .style("left", (d3.event.pageX + 5) + "px")
             .style("top", (d3.event.pageY - 100) + "px")
     }

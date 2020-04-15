@@ -113,15 +113,27 @@ div.tooltip {
 }
 
 .path:hover {
-    fill: DodgerBlue !important;
+    fill: rgb(15, 157, 240) !important;
     cursor: pointer;
 }
 
 /*bar-chart */
+.bar {
+   stroke :black;
+   stroke-width: 0.3px;
+}
 .barAxisText {
   font-size: 1rem;
   /* fill: darkgray; */
 }
+
+
+
+/*pie-chart */
+ .piece {
+   stroke :black;
+   stroke-width: 0.3px;
+ }
 
 .select {
     font-size: 1.2rem;

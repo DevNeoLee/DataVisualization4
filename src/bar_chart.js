@@ -7,8 +7,11 @@ export function barChart(data) {
         barPadding = 1,
         barWidth = width / data.length;
 
-    const barColors = d3.scaleOrdinal(d3.schemePastel2);
-
+    const barColors = d3.scaleThreshold()
+        .domain([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12])
+        // .range(["#aff05b", "#52f667", "#1ddfa3", "#23abd8", "#4c6edb", "#fe4b83", "#ff7847", "#e2b72f"]);
+        .range(["#4a58dd", "#2f9df5", "#27d7c4", "#4df884", "#95fb51", "#dedd32", "#ffa423", "#f65f18", "#ba2208", "#900c00", "#bf3caf", "#fe4b83"]);
+    // ["#6e40aa", "#963db3", "#bf3caf", "#e4419d", "#fe4b83", "#ff5e63", "#ff7847", "#fb9633", "#e2b72f", "#c6d63c", "#aff05b"]
     const canvas1 = d3.select('.barWrap')
         .append('svg')
         .attr('width', width + margin.right + margin.left)
@@ -46,9 +49,10 @@ export function barChart(data) {
         .append('rect')
         .attr('class', 'bar')
         .attr('transform', 'translate(80, 0)')
-        .attr('width', barWidth - barPadding)
+        .attr('width', barWidth )
         .attr('x', (d, i) => barWidth * i)
-        .style('fill', (d, i) => { return barColors(parseInt(d.VALUE)) })
+        // .style('fill', (d, i) => { return barColors(parseInt(d.VALUE)) })
+        .style('fill', (d, i) => { return barColors(i)})
         .attr("y", d => { return height + 20})
         .attr("height", '0')
         .transition()//animation effect
