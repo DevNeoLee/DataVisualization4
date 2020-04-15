@@ -1,106 +1,118 @@
-//draw map_chart with monthly data sent
+//draw map_chart with monthly data in
+//draw cities with long lat infos from csv file
 export function mapChart(data) {
-    data.push({ REF_DATE: data[0].REF_DATE, GEO: "Northwest Territories", VALUE: "0" }); // adding missing data for 'Northwest Territories" to the data array
+    //fix missing data of 'Northwest Territories" 
+    data.push({ REF_DATE: data[0].REF_DATE, GEO: "Northwest Territories", VALUE: "0" }); 
+     // sort CSV data accordng to json province order
     const dataSorted = [data[1], data[2], data[10], data[11], data[7], data[9], data[4], data[0], data[5], data[12], data[3], data[8], data[6]];
-    //canvas2 for map of canada chart, svg2
+ 
+    const margin = { top: 50, left: 50, right: 50, bottom: 50},
+        height = 520 - margin.top - margin.bottom,
+        width = 750 - margin.left - margin.right;
+
     const canvas2 = d3.select('.mapWrap')
         .append('svg')
-        .attr('width', '750')
-        .attr('height', '530')
-        .attr('class', 'canvas2');
+        .attr('width', width + margin.left + margin.right)
+        .attr('height', height + margin.top + margin.bottom)
+        .append('g')
+        .attr('transform', 'translate('+ margin.left + "," + margin.top + ")");
 
-    //define yScale
     const yScale = d3.scaleSqrt()
         .domain([140000, 0])
         .range([0, 500]);
-    //define colorScale
-    const colorScale = d3.scaleSqrt()
-        .domain([0, 1400000])
-        //  .range(["#a6cee3", "#b15928"]);
-        .range(d3.schemePastel2);
 
-    // drawing canadian map from topojson data from statistics canada
-    d3.json("data/province_map_topo.json", (d => {
-        const provinces = canvas2.selectAll('g')
-            .data(d.features)
-            .enter()
-            .append('g')
-            .attr('class', 'provinces');
-
-        const projection = d3.geoMercator()
-            .scale([420])
-            .translate([1070, 869]);
-
-        const path = d3.geoPath()
-            .projection(projection);
-
-        const province = provinces.append("path")
-            .attr('d', path)
-            .attr('class', 'province')
-            // .attr("class", function (data) { return "province" + data.id; })
-            .attr('fill', 'white');
-
-        d3.selectAll('.province')
-            .data(dataSorted)
-            .style("fill", function (d) { return colorScale(parseInt(d.VALUE)) })
-            .on("mouseover", onMouseOver) // listener for the mouseover event
-            .on("mouseout", onMouseOut); // listener for the mouseleave event
-        // .append('title')
-        // .text((data) => { return data.properties.PRENAME; });
-
-        //map-chart event listener for 'mouseover' 
-        // document.querySelectorAll('.province').forEach(province => {
-        //     province.addEventListener('mouseover', (e) => {
-        //         let tooltip = document.querySelector('.tooltip');
-        //         let x = e.pageX;     // Get the horizontal coordinate
-        //         let y = e.pageY;
-        //         tooltip.style.left = x + 20 + "px";
-        //         tooltip.style.top = y + 20 + "px";
-        //         tooltip.innerText = "# of Visitors: " + this.VALUE;
-        //         // tooltip.style.opacity = 1;
-        //         // console.log(data.features.);
-        //         // const message = `this province had: ${data.features.PRENAME}`;  
-        //     })
-        // });
-
-        //map-chart event listner for 'mouseleave'
-        // document.querySelectorAll('.province').forEach(province => {
-        //     province.addEventListener('mouseleave', (e) => {
-        //         let tooltip = document.querySelector('.tooltip');
-        //         // tooltip.style.opacity = 1;
-        //         tooltip.innerText = "";
-        //         // const message = `this province had: ${data.features.PRENAME}`;
-        //     })
-        // });
-        // //map-chart province name display
-        // provinces.append('text')
-        //     .attr('x', (data) => { return path.centroid(data)[0]; })
-        //     .attr('y', (data) => { return path.centroid(data)[1]; })
-        //     .attr('text-anchor', 'left')
-        //     .style('font-size', '1rem')
-        //     .text((data) => { return data.properties.PRENAME + data.id; });
-        // // data.id
-    }));
-   
-
-   
-   
-    // coloring the province accoring to the visitor numbers  
-    // const numList = reVisitorList.map(d => parseInt(d[2]));
- 
-    // d3.selectAll('.province')
-    //     .data(data)
-    //     .style("fill", function (d) { return colorScale(parseInt(d.VALUE)) });
-    // define axis
     const yAxis = d3.axisRight()
         .scale(yScale);
+   
+    const colorScale = d3.scaleSqrt()
+        .domain([0, 1400000])
+        .range(d3.schemePastel2);
+    
+    //convert globe project to 2d-map project
+    const projection = d3.geoMercator()
+        .scale([410])
+        .translate([980, 800]);
 
+    //draw map from json file
+    //draw cities on the map from csv file
+    d3.csv("data/cities.csv", (cities => {
+        d3.json("data/province_map.json", (map => {
+            console.log(cities);
+            const canada = canvas2.selectAll('g')
+                .data(map.features)
+                .enter()
+                .append('g')
+                .attr('class', 'province');
+
+            const paths = d3.geoPath()
+                .projection(projection);
+
+            //draw canada map
+            const path = canada.append("path")
+                .attr('d', paths)
+                .attr('class', 'path')
+                .attr('fill', 'white');
+
+            //draw major cities
+            const city = canvas2.selectAll('.cityDots')
+                .data(cities)
+                .enter()
+                .append('circle')
+                .attr('class', 'cityDots')
+                .attr('r', 2)
+                .attr('cx', city =>{
+                    const coords1 = projection([city.lng, city.lat]);
+                    console.log(coords1);
+                    return coords1[0];
+                    })
+                .attr('cy', city => {
+                    const coords2 = projection([city.lng, city.lat]);
+                    return coords2[1];
+                    });
+            
+            //add city names
+            canvas2.selectAll('.cityName')
+                .data(cities)
+                .enter()
+                .append('text')
+                .attr('class', 'cityName')
+                .attr('x', city => {
+                    const coords3 = projection([city.lng, city.lat]);
+                    return coords3[0];
+                })
+                .attr('y', city => {
+                    const coords4 = projection([city.lng, city.lat]);
+                    return coords4[1];
+                })
+                .text(d => d.city)
+                .attr('dx', 1)
+                .attr('dy', -2)
+                .style('font-size', '13px')
+                .style('text-shadow', '10px 10px 20px white');
+             
+
+
+            //color provinces according to d.VALUE( tourist number )
+            d3.selectAll('.path')
+                .data(dataSorted)
+                .style("fill", function (d) { return colorScale(parseInt(d.VALUE)) })
+                .on("mouseover", onMouseOver) // listener mouseover event
+                .on("mouseout", onMouseOut); // listener mouseleave event
+
+            d3.selectAll('.path')
+                .append('text')
+                .attr("transform", "translate(10, 20)")
+                .text(d => { "hello" + d.GEO });
+        }));
+
+    }));
+    
     // append group and insert axis
-    // canvas2
-    //     .append('g')
-    //     .attr('transform', 'translate(700, 50)')
-    //     .append(yAxis);
+    d3.selectAll('.path')
+        .attr('transform', 'translate(700, 50)')
+        .call(yAxis);
 }
+
 let mapTooltip = d3.select("body").append("div")
     .attr("class", "tooltip")
     .style("opacity", 0);
@@ -109,36 +121,13 @@ function onMouseOver(d, i) {
     mapTooltip.transition()
         .duration(0)
         .style("opacity", 0.9);
-    mapTooltip.html(d.GEO + " in " + d.REF_DATE + "<br/>" + "tourists from overseas: " + d.VALUE + " persons")
+    mapTooltip.html(d.GEO + " on " + d.REF_DATE + "<br/>" + "tourists from overseas: " + d.VALUE + " persons")
         .style("left", (d3.event.pageX - 100) + "px")
-        .style("top", (d3.event.pageY - 120) + "px")
-    // .attr('width', x.bandwidth() + 5)
-    // .attr("y", function (d) { return y(d.value) - 10; })
-    // .attr("height", function (d) { return height - y(d.value) + 10; });
-
-    // g.append("text")
-    //     .attr('class', 'val')
-    //     .attr('x', function () {
-    //         return x(d.year);
-    //     })
-    //     .attr('y', function () {
-    //         return y(d.value) - 15;
-    //     })
-    //     .text(function () {
-    //         return ['$' + d.value];  // Value of the text
-    //     });
+        .style("top", (d3.event.pageY - 120) + "px");
 }
 
-//mouseout event handler function
+//mouseout event listen function
 function onMouseOut(d, i) {
-    // d3.select(this).attr('class', 'bar');
-    // d3.select(this)
-    //     .transition()     // adds animation
-    //     .duration(400)
-    //     .attr('width', x.bandwidth())
-    //     .attr("y", function (d) { return y(d.value); })
-    //     .attr("height", function (d) { return height - y(d.value); });
-
     d3.selectAll('div.tooltip')
         .style('opacity', 0);
 }
