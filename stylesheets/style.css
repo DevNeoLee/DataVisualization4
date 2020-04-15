@@ -107,12 +107,12 @@ div.tooltip {
     z-index: 100;
 }
 
-.province {
+.path {
     stroke: black;
     stroke-width: 0.3px;
 }
 
-.province:hover {
+.path:hover {
     fill: DodgerBlue !important;
     cursor: pointer;
 }
