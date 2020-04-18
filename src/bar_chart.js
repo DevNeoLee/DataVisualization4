@@ -10,7 +10,7 @@ export function barChart(data) {
     const barColors = d3.scaleThreshold()
         .domain([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12])
         .range(["#4a58dd", "#2f9df5", "#27d7c4", "#4df884", "#95fb51", "#dedd32", "#ffa423", "#f65f18", "#ba2208", "#900c00", "#bf3caf", "#fe4b83"]);
-    const canvas1 = d3.select('.barWrap')
+    const canvas1 = d3.select('.leftContainer')
         .append('svg')
         .attr('width', width + margin.right + margin.left)
         .attr('height', height + margin.top + margin.bottom)
