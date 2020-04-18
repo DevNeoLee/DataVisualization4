@@ -4,11 +4,11 @@ export function pieChart(data, totalVisitor){
     //draw canvas 
     const canvas3 = d3.select(".pieWrap")
             .append('svg')
-            .attr('width', 345)
-            .attr('height',220)
-            .attr('class', 'canvas3')
+            .attr('width', 231)
+            .attr('height',245)
+            .attr('class', 'pie')
             .append('g')
-            .attr('transform', "translate(230, 108)");
+            .attr('transform', "translate(115, 114)");
 
     //variable for pie
     const color = d3.scaleThreshold()
@@ -76,10 +76,10 @@ export function pieChart(data, totalVisitor){
         })
         .attr('class', 'text');
 
-    //add actionListener to text on centroid
-    d3.selectAll('text')
-        .on("mouseover", onMouseover)
-        .on("mouseout", onMouseout); 
+    arcs.append('text')
+        .attr('x', -35)
+        .attr('y', 130)
+        .text('Visitor Ratio');
 
     //mouseover event handler function
     function onMouseover(d) {
@@ -91,7 +91,7 @@ export function pieChart(data, totalVisitor){
             .duration(0)
             .style("opacity", '0.9');
         pieTooltip.html(d.data.GEO + " on " + d.data.REF_DATE + "<br/>" + 
-                                    "tourists from overseas: " + d.data.VALUE + " persons" + 
+                                    "Non-Residential Travellers: " + d.data.VALUE + " persons" + 
                                     "<br/>" + Math.round(d.data.VALUE / totalVisitor * 100) + "%")
             .style("left", (d3.event.pageX + 5) + "px")
             .style("top", (d3.event.pageY - 100) + "px")
