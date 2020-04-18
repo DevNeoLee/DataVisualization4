@@ -1,0 +1,25 @@
+{
+  "name": "data_visualization4",
+  "version": "1.0.0",
+  "description": "Travel to Canada Statistics each month since 2000 Jan.",
+  "main": "main.js",
+  "scripts": {
+    "dev": "webpack -d --watch",
+    "prod": "webpack -p"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DevNeoLee/DataVisualization4.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DevNeoLee/DataVisualization4/issues"
+  },
+  "homepage": "https://github.com/DevNeoLee/DataVisualization4#readme",
+  "devDependencies": {
+    "webpack": "^4.42.1",
+    "webpack-cli": "^3.3.11"
+  }
+}
