@@ -1,24 +1,22 @@
-# <u>Canadian Province Visited from Overseas in 2000 - 2019</u>
-
-### ** [live site](https://devneolee.github.io/DataVisualization4/): http://devneolee.github.io/DataVisualization4/**
+# Monthly Canadian Province Visited from Overseas in 2000 - 2019
 -----
-## **Technology**
+###  [live site](https://devneolee.github.io/DataVisualization4/): http://devneolee.github.io/DataVisualization4/
+-----
+## Technology
 - d3.js 
 - JavaScript
 - HTML
 - CSS
 - CSV, JSON
 - Webpack
-=====
-
-(blockquote)
-> hello there
-> what a wonderful day!
-
-## What the Application Can Show
-
-![](image/gifTravel1.gif)
-
+-----
+## Motivation
+This project aims to achieve meaningul graphical information on a page intuitively from large volume of complicated data sets using javascript tool most effectively on web development environment.
+> Data Interpretation is the process of making sense out of a collection of data > that has been processed. This collection may be present in various forms like > bar graphs, line charts and tabular forms and other similar forms and hence 
+> needs an interpretation of some kind.
+-----
+## Questions could be answered from the Application 
+-----
 1. Where is the Most Popular Canadian Province to Travel from Oversea Visitors Over Last 20 Years?
 
 1. Is There Any Popularity Trend Changes Over Time?
@@ -34,28 +32,21 @@
 1. Specific graphical chart and method have choosed to maximize the representation of specific meaning from the data set just like as good data scientist does on their works.
 
 1. Knowedge to analize complicated big data sets and representing interactively on Web Application is facinating process.
-
-
-## Summary
-This project aims to achieve meaningul graphical information on a page intuitively from large volume of complicated data sets using javascript tool most effectively on web development environment.
-
+-----
 ## Features:
-
 1. scale to represent the same data to different graphical respresentation.
-
-(blockquote)
 >Scales are a convenient abstraction for a fundamental task in >visualization: mapping a dimension of abstract data to a visual 
 >representation.
 
-    1. linear
-    1. square
-    1. threshold
+    - linear
+    - square
+    - threshold
 
-1. ## threshold
+## 1. Threshold Scale
 ![](image/screenshot1.png)
 
 ```javascript
- const visitorFormat = [0, 500, 5000, 10000, 50000, 100000, 300000, 700000, 1000000, 1300000, 1700000]; //custom visitors amounts
+const visitorFormat = [0, 500, 5000, 10000, 50000, 100000, 300000, 700000, 1000000, 1300000, 1700000]; //custom visitors amounts
 
 const colorScale = d3.scaleThreshold()//specific colors for specific group of visitor amount
     .domain(visitorFormat)
@@ -68,7 +59,7 @@ d3.selectAll('.path')
     .style("fill", function (d) { return colorScale(parseInt(d.VALUE)) })
 ```
 The function is shown below:
- 1. ## square
+ ## 2.Square Scale
 
 ```javascript
 const yScale = d3.scaleSqrt()
@@ -80,7 +71,7 @@ const yAxisScale = d3.scaleSqrt()
 
 ```
 
-1. ## linear
+## 3. Linear Scale
 
 ```javascript
  const xScale = d3.scaleLinear()
@@ -88,7 +79,7 @@ const yAxisScale = d3.scaleSqrt()
         .domain([0, data.length]);
 ```
 
-1. tooltip 
+## Tooltip 
 
 ![](image/screenshot3.png)
 ![](image/screenshot2.png)
@@ -123,7 +114,7 @@ function onMouseOut(d, i) {
 1. city locating on the map and pointing out
  projection and longitude, latitude
 
-## ** Future Features to Come: **
+## Future Features to Come
 
 - Further Details on Each Canadian Cities
 - Interconnected actions of different charts to each other
@@ -131,3 +122,25 @@ function onMouseOut(d, i) {
 - concurrently and give more insight and meaning of the data sets.
 - Use other tools run concurrently with D3.
 - Updating automatically with newly updated data sets from api sources.
+
+
+Installation
+Provide step by step series of examples and explanations about how to get a development env running.
+
+API Reference
+Depending on the size of the project, if it is small and simple enough the reference docs can be added to the README. For medium size to larger projects it is important to at least provide a link to where the API reference docs live.
+
+Tests
+Describe and show how to run the tests with code examples.
+
+How to use?
+If people like your project they’ll want to learn how they can use it. To do so include step by step guide to use your project.
+
+Contribute
+Let people know how they can contribute into your project. A contributing guideline will be a big plus.
+
+Credits
+Give proper credits. This could be a link to any repo which inspired you to build this project, any blogposts or links to people who contrbuted in this project.
+
+## License ##
+MIT © Justin K Lee
