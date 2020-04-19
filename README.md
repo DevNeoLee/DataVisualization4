@@ -92,7 +92,7 @@ Variables `yScale` and `yAxisScale` are declared by calling `d3.scaleSqrt()` wit
         .attr('transform', 'translate(65, 10)')
         .call(yAxisScale);
 ```
-`yScale` and `yAxisSclae` are each called to represent the scaled values of the visitor values from the data sets on the bar chart.
+`yScale` and `yAxisScale` are each called to represent the scaled values of the visitor values from the data sets on the bar chart.
 
 - ### Linear Scale
 
@@ -105,14 +105,14 @@ For series of categirical unordered data, a linear scale, `d3.scaleLinear()` met
         .rangeRound([0, width])
         .domain([0, data.length]);
 ```
-Continuous Linear scale typically in their domain and range, produces a piecewise scale for each entry, provinces equally.
+Continuous Linear scale in their domain and range typically produces a piecewise scale for each entry province equally.
 
 ---
 ## Tootips for Detail Info on Various Parts of the Graphics 
 <img src="image/screenshot3.png" alt="map_chart" width="300" />
 <img src="image/screenshot2.png" alt="map_chart" width="250" />
 
-Detail informations of each specific data sets on different charts or map graphics are interactivly and dynamically presented with eventListener functions of JavaScript.
+Detail informations of each specific data sets on different charts or map graphics are interactively and dynamically presented with JavaScript functions.
 
 ``` javascript
 //create tooptip element
@@ -135,7 +135,7 @@ function onMouseOut(d, i) {
     d3.selectAll('div.tooltip').style('opacity', 0);
 }
 ```
-Various parts of the graphics are added with tooltip functions using
+Various parts of the graphics are added with tooltips using
 `d3.selection.on('action', function(){})` method
 
 ```javascript
@@ -145,7 +145,7 @@ Various parts of the graphics are added with tooltip functions using
                 .on("mouseout", onMouseOut);
 ```
 ---
-## Data distribution to differnt charts or map 
+## Data distribution to different charts or map 
 ```javascript
        const monthlyData = [];
         for(let ele = 0; ele < data.length; ele ++ ) {
@@ -157,7 +157,7 @@ Various parts of the graphics are added with tooltip functions using
             if (monthlyData.length == 12 ) { break }
         }
 ```
-Specific narrowed data part are collected and organized.
+Specific narrow-down data parts are collected and organized.
  
  ```javascript
     mapChart(monthlyData); 
@@ -170,7 +170,7 @@ Specific narrowed data part are collected and organized.
     barChart(sortedMonthlyData);
     pieChart(sortedMonthlyData, totalVisitor);
 ```
-And they are sent through calling map or chart build methods with appropriate forms of data.
+And they are sent through calling map or chart build methods with appropriate data.
 
 ---
 
@@ -221,9 +221,9 @@ And the city name labels needed to be applied to the same process
 
 - Further Details on Each Canadian Cities
 - Interconnected actions of different charts to each other
-- Represent related data sets from different data set files 
-- concurrently and give more insight and meaning of the data sets.
-- Use other tools run concurrently with D3.
+- Combine additionally related data sets from other data files 
+- Develope more insight and meaning from data sets and graphically represent.
+- Use other tech tools run concurrently with D3.
 - Updating automatically with newly updated data sets from api sources.
 - API Reference
 
