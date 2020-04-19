@@ -79,7 +79,7 @@ const yAxisScale = d3.scaleSqrt()
         .domain([0, data.length]);
 ```
 
-## Tooltip 
+## Tooltip d3 text with mouse action listen
 
 ![](image/screenshot3.png)
 ![](image/screenshot2.png)
@@ -107,12 +107,49 @@ function onMouseOut(d, i) {
 }
 ```
 
-1. d3 text with mouse action listen
-
 1. data sending to specifc chart functions
+```javascript
+       const monthlyData = [];
+        for(let ele = 0; ele < data.length; ele ++ ) {
+            if ((parseInt(data[ele]['REF_DATE'].slice(2, 4)) == year) &&
+                (parseInt(data[ele]['REF_DATE'].slice(5, 7)) == month))
+            {
+                monthlyData.push(data[ele]);
+            }
+            if (monthlyData.length == 12 ) { break }
+        }
+ 
+    mapChart(monthlyData); //call map chart with unsorted data
+  
+    const sortedMonthlyData = [...monthlyData]; //copy unsorted data
+    sortedMonthlyData.sort(function(b, a){ return parseInt(a.VALUE) - parseInt(b.VALUE)}); // sort data in order according to the value amount
+    
+    // calculate the total # of visitors to Canada on the month data
+    const totalVisitor = sortedMonthlyData.reduce((a, b) => (a + parseInt(b.VALUE)), 0);
+
+    //call charts drawing with sorted monthly data
+    barChart(sortedMonthlyData);
+    pieChart(sortedMonthlyData, totalVisitor);
+```
 
 1. city locating on the map and pointing out
  projection and longitude, latitude
+```javascript
+const city = canvas2.selectAll('.cityDots')
+                .data(cities)
+                .enter()
+                .append('circle')
+                .attr('class', 'cityDots')
+                .attr('r', 2)
+                .attr('cx', city =>{
+                    const coords1 = projection([city.lng, city.lat]);
+                    return coords1[0];
+                    })
+                .attr('cy', city => {
+                    const coords2 = projection([city.lng, city.lat]);
+                    return coords2[1];
+                    });
+```
 
 ## Future Features to Come
 
