@@ -1,6 +1,6 @@
 # Monthly Canadian Province Visited from Overseas in 2000 - 2019
 
-####  [live site](https://devneolee.github.io/DataVisualization4/): http://devneolee.github.io/DataVisualization4/
+####  [live site](https://devneolee.github.io/Canada_Tourist_Chart_d3/): https://devneolee.github.io/Canada_Tourist_Chart_d3/
 -----
 ## Technology
 - d3.js 
