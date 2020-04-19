@@ -60,7 +60,7 @@ d3.selectAll('.path')
 ```
 The function is shown below:
  ## 2.Square Scale
-
+![](image/screenshot4.png)
 ```javascript
 const yScale = d3.scaleSqrt()
     .domain([0, 1700000]) // record high number of visitors, hard code here if there is new high! 
@@ -72,7 +72,7 @@ const yAxisScale = d3.scaleSqrt()
 ```
 
 ## 3. Linear Scale
-
+![](image/screenshot5.png)
 ```javascript
  const xScale = d3.scaleLinear()
         .rangeRound([0, width])
