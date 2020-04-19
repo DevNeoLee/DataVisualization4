@@ -1,15 +1,19 @@
-# **<u>Most Popular Canadian Province to Visit on 2000 - 2019</u>**
-=====
-**[live site](https://devneolee.github.io/DataVisualization4/) :devneolee.github.io/DataVisualization4/**
+# <u>Canadian Province Visited from Overseas in 2000 - 2019</u>
+
+### ** [live site](https://devneolee.github.io/DataVisualization4/): http://devneolee.github.io/DataVisualization4/**
 -----
 ## **Technology**
--D3.js 
--JavaScript
--HTML
--CSS
--Webpack
---CSV, JSON
+- d3.js 
+- JavaScript
+- HTML
+- CSS
+- CSV, JSON
+- Webpack
 =====
+
+(blockquote)
+> hello there
+> what a wonderful day!
 
 ## What the Application Can Show
 
@@ -39,19 +43,78 @@ This project aims to achieve meaningul graphical information on a page intuitive
 
 1. scale to represent the same data to different graphical respresentation.
 
--linear
--square
--threshold
+(blockquote)
+>Scales are a convenient abstraction for a fundamental task in >visualization: mapping a dimension of abstract data to a visual 
+>representation.
 
-The function is shown below:
+    1. linear
+    1. square
+    1. threshold
+
+1. ## threshold
+![](image/screenshot1.png)
 
 ```javascript
+ const visitorFormat = [0, 500, 5000, 10000, 50000, 100000, 300000, 700000, 1000000, 1300000, 1700000]; //custom visitors amounts
 
-const freedom = free();
+const colorScale = d3.scaleThreshold()//specific colors for specific group of visitor amount
+    .domain(visitorFormat)
+    .range(["#ffffff", "#f7fbff", "#e3eef9", "#cfe1f2", "#b5d4e9", "#93c3df", "#6daed5", "#4b97c9", "#2f7ebc", "#1864aa", "#0a4a90", "#08306b"]);
+```
+
+```javascript
+d3.selectAll('.path')
+    .data(dataSorted)
+    .style("fill", function (d) { return colorScale(parseInt(d.VALUE)) })
+```
+The function is shown below:
+ 1. ## square
+
+```javascript
+const yScale = d3.scaleSqrt()
+    .domain([0, 1700000]) // record high number of visitors, hard code here if there is new high! 
+    .range([0, height]);
+const yAxisScale = d3.scaleSqrt()
+    .domain([1700000, 0]) // record high number of visitors, hard code here if there is new high!
+    .range([0, height]);
 
 ```
 
+1. ## linear
+
+```javascript
+ const xScale = d3.scaleLinear()
+        .rangeRound([0, width])
+        .domain([0, data.length]);
+```
+
 1. tooltip 
+
+![](image/screenshot3.png)
+![](image/screenshot2.png)
+
+``` javascript
+//create tooptip element
+const mapTooltip = d3.select("body").append("div")
+    .attr("class", "tooltip")
+    .style("opacity", 0);
+
+//listen mouseover event
+function onMouseOver(d, i) {
+    mapTooltip.transition()
+        .duration(0)
+        .style("opacity", 0.9);
+    mapTooltip.html(d.GEO + " on " + d.REF_DATE + "<br/>" + "Tourists from Overseas: " + d.VALUE + " persons")
+        .style("left", (d3.event.pageX - 100) + "px")
+        .style("top", (d3.event.pageY - 120) + "px");
+}
+
+//listen mouseout event
+function onMouseOut(d, i) {
+    d3.selectAll('div.tooltip')
+        .style('opacity', 0);
+}
+```
 
 1. d3 text with mouse action listen
 
@@ -62,8 +125,9 @@ const freedom = free();
 
 ## ** Future Features to Come: **
 
--Further Details on Each Canadian Cities
--Interconnected actions of different charts to each other
--Represent related data sets from different data set files -concurrently and give more insight and meaning of the data sets.
--Use other tools run concurrently with D3.
--Updating automatically with newly updated data sets from api sources.
+- Further Details on Each Canadian Cities
+- Interconnected actions of different charts to each other
+- Represent related data sets from different data set files 
+- concurrently and give more insight and meaning of the data sets.
+- Use other tools run concurrently with D3.
+- Updating automatically with newly updated data sets from api sources.
