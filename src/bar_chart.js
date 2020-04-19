@@ -94,7 +94,7 @@ export function barChart(data) {
     canvas1.append('g')
         .attr('class', 'y_axis')
         .attr('transform', 'translate(65, 10)')
-        .call(yAxis);
+        .call(yAxisScale);
 
     //title text on map chart
     canvas1

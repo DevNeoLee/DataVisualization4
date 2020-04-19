@@ -10,13 +10,15 @@
 - Webpack
 -----
 ## Raw Data Used
-1. Travelers to Each Province in CSV form from Statistics Canada on Jan 2000 - Dec 2019
-2. 
+1. Travelers to each province in CSV file from Statistics Canada on Jan 2000 - Dec 2019
+2. Province map Json file from Statistics Canada
+3. Canadian cities CSV file
 
 ## Motivation
-Data is power especially in the era of big data and AI.
+Data is the greatest power in the era of big data and AI.
 
-This project aims to show meaninful graphical information intuitively from large volume of complicated data sets. JavaScript and its library d3 are used in the web application development.
+This project aims to show meaninful graphical visualizations intuitively from large volume of complicated data sets. JavaScript and its library d3 are used to express interactively and dynamically.
+
 > Data Interpretation is the process of making sense out of a collection of data that has been processed. This collection may be present in various forms like bar graphs, line charts and tabular forms and other similar forms and hence needs an interpretation of some kind.
 
 1. Where was the most popular Canadian province to travel for oversea visitors last 20 Years?
@@ -29,7 +31,7 @@ This project aims to show meaninful graphical information intuitively from large
 
 1. Which city is the most visited, on which month ,and in which year?
 
-1. Which specific graphical chart, form, or method are appropriate to maximize the specific meaning from the the specific data set.
+1. Which graphical chart, form, or method are appropriate to maximize the specific meaning from the the data set provided.
 
 -----
 ## Features:
@@ -38,37 +40,64 @@ This project aims to show meaninful graphical information intuitively from large
 
 >Scales are a convenient abstraction for a fundamental task in visualization: mapping a dimension of abstract data to a visual representation.
 
-### 1. Threshold Scale
+Three different scale functions from d3 are used to represent specific needs of visualization forms.
+
+- ### Threshold Scale
+
+After through observation of data sets over 20 years, visitor amount gaps between most popular and least provinces are were too significant as 0 to about 1.7 million. Threshold scale is selected to represent inbetween cut values directly in colors. 
+
 <img src="image/screenshot1.png" alt="map_chart" width="500" />
 
 ```javascript
-const visitorFormat = [0, 500, 5000, 10000, 50000, 100000, 300000, 700000, 1000000, 1300000, 1700000]; //custom visitors amounts
+const visitorFormat = [0, 500, 5000, 10000, 50000, 100000, 300000, 700000, 1000000, 1300000, 1700000];
 
-const colorScale = d3.scaleThreshold()//specific colors for specific group of visitor amount
+const colorScale = d3.scaleThreshold()
     .domain(visitorFormat)
     .range(["#ffffff", "#f7fbff", "#e3eef9", "#cfe1f2", "#b5d4e9", "#93c3df", "#6daed5", "#4b97c9", "#2f7ebc", "#1864aa", "#0a4a90", "#08306b"]);
 ```
+The `d3.scaleThreshold()` method is called for the variable `colorScale` to group variable `visitorFormat` array representing  the precise cut values with the appropriate range of blue color intensities.
 
 ```javascript
 d3.selectAll('.path')
     .data(dataSorted)
     .style("fill", function (d) { return colorScale(parseInt(d.VALUE)) })
 ```
+The `colorScale` was used to fill the specific colors for different province regions on the map.
 
- ### 2. Square Scale
+ - ### Square-Root Scale
+ `d3.scaleSqrt()` method creates a square-root based scale. 
+
  <img src="image/screenshot4.png" alt="map_chart" width="150" />
+
+In order to represent such a great gap between the min to max values of real life event visually on the same chart, square-root scale is chosen to lower the larger value and scale up the smaller graphically.
 
 ```javascript
 const yScale = d3.scaleSqrt()
-    .domain([0, 1700000]) // record high number of visitors, hard code here if there is new high! 
+    .domain([0, 1700000]) 
     .range([0, height]);
 const yAxisScale = d3.scaleSqrt()
-    .domain([1700000, 0]) // record high number of visitors, hard code here if there is new high!
+    .domain([1700000, 0]) 
     .range([0, height]);
+```
+Variables `yScale` and `yAxisScale` are declared by calling `d3.scaleSqrt()` with its domain and range values.
 
+```javascript
+    .attr('y', d => height - yScale(parseInt(d.VALUE)) + 10)
+    .attr('height', d => yScale(parseInt(d.VALUE)));
 ```
 
-### 3. Linear Scale
+```javascript
+ canvas1.append('g')
+        .attr('class', 'y_axis')
+        .attr('transform', 'translate(65, 10)')
+        .call(yAxisScale);
+```
+`yScale` and `yAxisSclae` are each called to represent the scaled values of the visitor values from the data sets on the bar chart.
+
+- ### Linear Scale
+
+For series of categirical unordered data, a linear scale, `d3.scaleLinear()` method is used.
+
 <img src="image/screenshot5.png" alt="map_chart" width="400" />
 
 ```javascript
@@ -76,10 +105,14 @@ const yAxisScale = d3.scaleSqrt()
         .rangeRound([0, width])
         .domain([0, data.length]);
 ```
+Continuous Linear scale typically in their domain and range, produces a piecewise scale for each entry, provinces equally.
 
-## Tootips for Extra Text Info on Various Parts of the Graphics 
+---
+## Tootips for Detail Info on Various Parts of the Graphics 
 <img src="image/screenshot3.png" alt="map_chart" width="300" />
-<img src="image/screenshot2.png" alt="map_chart" width="300" />
+<img src="image/screenshot2.png" alt="map_chart" width="250" />
+
+Detail informations of each specific data sets on different charts or map graphics are interactivly and dynamically presented with eventListener functions of JavaScript.
 
 ``` javascript
 //create tooptip element
@@ -99,12 +132,20 @@ function onMouseOver(d, i) {
 
 //listen mouseout event
 function onMouseOut(d, i) {
-    d3.selectAll('div.tooltip')
-        .style('opacity', 0);
+    d3.selectAll('div.tooltip').style('opacity', 0);
 }
 ```
+Various parts of the graphics are added with tooltip functions using
+`d3.selection.on('action', function(){})` method
 
-1. data sending to specifc chart functions
+```javascript
+  d3.selectAll('.path')
+                .data(dataSorted)
+                .on("mouseover", onMouseOver) 
+                .on("mouseout", onMouseOut);
+```
+---
+## Data distribution to differnt charts or map 
 ```javascript
        const monthlyData = [];
         for(let ele = 0; ele < data.length; ele ++ ) {
@@ -115,24 +156,34 @@ function onMouseOut(d, i) {
             }
             if (monthlyData.length == 12 ) { break }
         }
+```
+Specific narrowed data part are collected and organized.
  
-    mapChart(monthlyData); //call map chart with unsorted data
+ ```javascript
+    mapChart(monthlyData); 
   
-    const sortedMonthlyData = [...monthlyData]; //copy unsorted data
-    sortedMonthlyData.sort(function(b, a){ return parseInt(a.VALUE) - parseInt(b.VALUE)}); // sort data in order according to the value amount
+    const sortedMonthlyData = [...monthlyData]; 
+    sortedMonthlyData.sort(function(b, a){ return parseInt(a.VALUE) - parseInt(b.VALUE)}); 
     
-    // calculate the total # of visitors to Canada on the month data
     const totalVisitor = sortedMonthlyData.reduce((a, b) => (a + parseInt(b.VALUE)), 0);
 
-    //call charts drawing with sorted monthly data
     barChart(sortedMonthlyData);
     pieChart(sortedMonthlyData, totalVisitor);
 ```
+And they are sent through calling map or chart build methods with appropriate forms of data.
 
-1. city locating on the map and pointing out
- projection and longitude, latitude
+---
+
+## Locating Canadian cities on the map with their latitude and longitude
 ```javascript
-const city = canvas2.selectAll('.cityDots')
+const projection = d3.geoMercator()
+        .scale([410])
+        .translate([980, 770]);
+```
+The 3-D earth was projected on 2d map using `d3.geoMercator()` scaling function.
+
+```javascript
+ const city = canvas2.selectAll('.cityDots')
                 .data(cities)
                 .enter()
                 .append('circle')
@@ -147,6 +198,24 @@ const city = canvas2.selectAll('.cityDots')
                     return coords2[1];
                     });
 ```
+ And the cities latitude and longitude circle points are also needed to be projected through the same funcion.
+
+ ```javascript
+canvas2.selectAll('.cityName')
+                .data(cities)
+                .enter()
+                .append('text')
+                .attr('class', 'cityName')
+                .attr('x', city => {
+                    const coords3 = projection([city.lng, city.lat]);
+                    return coords3[0];
+                })
+                .attr('y', city => {
+                    const coords4 = projection([city.lng, city.lat]);
+                    return coords4[1];
+                })
+```
+And the city name labels needed to be applied to the same process
 
 ## Future Features to Come
 
@@ -156,25 +225,7 @@ const city = canvas2.selectAll('.cityDots')
 - concurrently and give more insight and meaning of the data sets.
 - Use other tools run concurrently with D3.
 - Updating automatically with newly updated data sets from api sources.
-
-
-Installation
-Provide step by step series of examples and explanations about how to get a development env running.
-
-API Reference
-Depending on the size of the project, if it is small and simple enough the reference docs can be added to the README. For medium size to larger projects it is important to at least provide a link to where the API reference docs live.
-
-Tests
-Describe and show how to run the tests with code examples.
-
-How to use?
-If people like your project they’ll want to learn how they can use it. To do so include step by step guide to use your project.
-
-Contribute
-Let people know how they can contribute into your project. A contributing guideline will be a big plus.
-
-Credits
-Give proper credits. This could be a link to any repo which inspired you to build this project, any blogposts or links to people who contrbuted in this project.
+- API Reference
 
 ## License ##
 MIT © Justin K Lee
