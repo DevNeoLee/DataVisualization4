@@ -6,7 +6,6 @@ import { mapChart } from './map_chart.js';
 //organize specific monthly data
 //call bar, pie, map chart drawing methods with organized data
 export const putData = (data, year = 10, month = 7) => {
-
     const monthlyData = [];
         for(let ele = 0; ele < data.length; ele ++ ) {
             if ((parseInt(data[ele]['REF_DATE'].slice(2, 4)) == year) &&

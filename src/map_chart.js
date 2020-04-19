@@ -21,13 +21,6 @@ export function mapChart(data) {
         .append('g')
         .attr('transform', 'translate('+ margin.left + "," + margin.top + ")");
 
-    const yScale = d3.scaleThreshold()
-        .domain([140000, 0])
-        .range([0, 500]);
-
-    const yAxis = d3.axisRight()
-        .scale(yScale);
-   
     const visitorFormat = [0, 500, 5000, 10000, 50000, 100000, 300000, 700000, 1000000, 1300000, 1700000]; //custom visitors amounts
 
     const colorScale = d3.scaleThreshold()//specific colors for specific group of visitor amount
@@ -182,21 +175,12 @@ export function mapChart(data) {
                 .on("mouseover", onMouseOver) // listener mouseover event
                 .on("mouseout", onMouseOut); // listener mouseleave event
 
-            d3.selectAll('.path')
-                .append('text')
-                .attr("transform", "translate(10, 20)")
-                .text(d => { "hello" + d.GEO });
         }));
     }));
-    
-    // append group and insert axis
-    d3.selectAll('.path')
-        .attr('transform', 'translate(700, 50)')
-        .call(yAxis);
 }
 
 //create tooptip element
-let mapTooltip = d3.select("body").append("div")
+const mapTooltip = d3.select("body").append("div")
     .attr("class", "tooltip")
     .style("opacity", 0);
 

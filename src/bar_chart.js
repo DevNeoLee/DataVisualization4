@@ -74,7 +74,6 @@ export function barChart(data) {
             return i * 30;
         })
         .attr('y', d => height - yScale(parseInt(d.VALUE)) + 8)
-        .attr("transform", " rotate(0)")
         .style('text-anchor', 'middle')
         .attr('x', (d, i) => (95 + barWidth * i))
         .attr('fill', 'darkblue');
