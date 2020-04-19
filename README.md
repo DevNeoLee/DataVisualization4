@@ -1,49 +1,45 @@
 # Monthly Canadian Province Visited from Overseas in 2000 - 2019
------
-###  [live site](https://devneolee.github.io/DataVisualization4/): http://devneolee.github.io/DataVisualization4/
+
+####  [live site](https://devneolee.github.io/DataVisualization4/): http://devneolee.github.io/DataVisualization4/
 -----
 ## Technology
 - d3.js 
 - JavaScript
 - HTML
 - CSS
-- CSV, JSON
 - Webpack
 -----
+## Raw Data Used
+1. Travelers to Each Province in CSV form from Statistics Canada on Jan 2000 - Dec 2019
+2. 
+
 ## Motivation
-This project aims to achieve meaningul graphical information on a page intuitively from large volume of complicated data sets using javascript tool most effectively on web development environment.
-> Data Interpretation is the process of making sense out of a collection of data > that has been processed. This collection may be present in various forms like > bar graphs, line charts and tabular forms and other similar forms and hence 
-> needs an interpretation of some kind.
------
-## Questions could be answered from the Application 
------
-1. Where is the Most Popular Canadian Province to Travel from Oversea Visitors Over Last 20 Years?
+Data is power especially in the era of big data and AI.
 
-1. Is There Any Popularity Trend Changes Over Time?
+This project aims to show meaninful graphical information intuitively from large volume of complicated data sets. JavaScript and its library d3 are used in the web application development.
+> Data Interpretation is the process of making sense out of a collection of data that has been processed. This collection may be present in various forms like bar graphs, line charts and tabular forms and other similar forms and hence needs an interpretation of some kind.
 
-1. Are Total Travelers Increasing or Decreasing On Each Province and Canada?
+1. Where was the most popular Canadian province to travel for oversea visitors last 20 Years?
 
-1. Which Month or Seasons Are Busier Than the Others?
+1. Is there any popularity trend change?
 
-1. Which Month or Month is the Most Visited Over the Time?
+1. Are total travelers increasing on each provinces or on the nation?
 
-1. Which City is the Most Visited, on Which Month ,and in Which Year?
+1. Which month or season are busier than others?
 
-1. Specific graphical chart and method have choosed to maximize the representation of specific meaning from the data set just like as good data scientist does on their works.
+1. Which city is the most visited, on which month ,and in which year?
 
-1. Knowedge to analize complicated big data sets and representing interactively on Web Application is facinating process.
+1. Which specific graphical chart, form, or method are appropriate to maximize the specific meaning from the the specific data set.
+
 -----
 ## Features:
-1. scale to represent the same data to different graphical respresentation.
->Scales are a convenient abstraction for a fundamental task in >visualization: mapping a dimension of abstract data to a visual 
->representation.
 
-    - linear
-    - square
-    - threshold
+## Three different scales on the same data set
 
-## 1. Threshold Scale
-![](image/screenshot1.png)
+>Scales are a convenient abstraction for a fundamental task in visualization: mapping a dimension of abstract data to a visual representation.
+
+### 1. Threshold Scale
+<img src="image/screenshot1.png" alt="map_chart" width="500" />
 
 ```javascript
 const visitorFormat = [0, 500, 5000, 10000, 50000, 100000, 300000, 700000, 1000000, 1300000, 1700000]; //custom visitors amounts
@@ -58,9 +54,10 @@ d3.selectAll('.path')
     .data(dataSorted)
     .style("fill", function (d) { return colorScale(parseInt(d.VALUE)) })
 ```
-The function is shown below:
- ## 2.Square Scale
-![](image/screenshot4.png)
+
+ ### 2. Square Scale
+ <img src="image/screenshot4.png" alt="map_chart" width="150" />
+
 ```javascript
 const yScale = d3.scaleSqrt()
     .domain([0, 1700000]) // record high number of visitors, hard code here if there is new high! 
@@ -71,18 +68,18 @@ const yAxisScale = d3.scaleSqrt()
 
 ```
 
-## 3. Linear Scale
-![](image/screenshot5.png)
+### 3. Linear Scale
+<img src="image/screenshot5.png" alt="map_chart" width="400" />
+
 ```javascript
  const xScale = d3.scaleLinear()
         .rangeRound([0, width])
         .domain([0, data.length]);
 ```
 
-## Tooltip d3 text with mouse action listen
-
-![](image/screenshot3.png)
-![](image/screenshot2.png)
+## Tootips for Extra Text Info on Various Parts of the Graphics 
+<img src="image/screenshot3.png" alt="map_chart" width="300" />
+<img src="image/screenshot2.png" alt="map_chart" width="300" />
 
 ``` javascript
 //create tooptip element
