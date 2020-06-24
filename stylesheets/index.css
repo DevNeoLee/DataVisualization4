@@ -93,6 +93,7 @@ img:hover {
     color: white;
     background: steelblue;
     border: 1px solid black;
+    border-radius: 5px;
     text-align: center;
 }
 
