@@ -4,8 +4,8 @@ import { pieChart } from './pie_chart.js';
 import { mapChart } from './map_chart.js';
 
 //organize specific monthly data
-//call bar, pie, map chart drawing methods with organized data
-export const putData = (data, year = 10, month = 7) => {
+//call bar, pie, map chart
+export const feedData = (data, year = 10, month = 7) => {
     const monthlyData = [];
         for(let ele = 0; ele < data.length; ele ++ ) {
             if ((parseInt(data[ele]['REF_DATE'].slice(2, 4)) == year) &&
@@ -16,19 +16,16 @@ export const putData = (data, year = 10, month = 7) => {
             if (monthlyData.length == 12 ) { break }
         }
  
-    mapChart(monthlyData); //call map chart with unsorted data
+    mapChart(monthlyData); 
   
-    const sortedMonthlyData = [...monthlyData]; //copy unsorted data
+    const sortedMonthlyData = [...monthlyData]; 
     sortedMonthlyData.sort(function(b, a){ return parseInt(a.VALUE) - parseInt(b.VALUE)}); // sort data in order according to the value amount
     
-    // calculate the total # of visitors to Canada on the month data
     const totalVisitor = sortedMonthlyData.reduce((a, b) => (a + parseInt(b.VALUE)), 0);
 
-    //call charts drawing with sorted monthly data
     barChart(sortedMonthlyData);
     pieChart(sortedMonthlyData, totalVisitor);
 
-    // write site main title with specific visitor info for the month
     d3.selectAll('.info').remove();
     d3.select('.infoWrap').append('g')
         .data(sortedMonthlyData)
@@ -37,7 +34,19 @@ export const putData = (data, year = 10, month = 7) => {
         .text(d =>  totalVisitor + " Tourists Have Visited Canada" + " on " + d.REF_DATE );
 }
 
-
-
+export const provinces = [
+    "Newfoundland and Labrador",
+    "Prince Edward Island",
+    "Nova Scotia",
+    "New Brunswick",
+    "Quebec",
+    "Ontario",
+    "Manitoba",
+    "Saskatchewan",
+    "Alberta",
+    "British Columbia",
+    "Yukon",
+    "Nunavut"
+]
 
 

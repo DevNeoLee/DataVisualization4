@@ -3,10 +3,8 @@
 //draw cities with long lat infos from csv file
 export function mapChart(data) {
      
-    //fix missing data of 'Northwest Territories" 
     data.push({ REF_DATE: data[0].REF_DATE, GEO: "Northwest Territories", VALUE: "0" }); 
      
-    //sort CSV data accordng to json province order
     const dataSorted = [data[9], data[4], data[11], data[1], data[7], data[10], data[6], data[5], data[3], data[12], data[8], data[0], data[2]];
   
     const margin = { top: 62, left: 30, right: 50, bottom: 50},
@@ -23,7 +21,7 @@ export function mapChart(data) {
 
     const visitorFormat = [0, 500, 5000, 10000, 50000, 100000, 300000, 700000, 1000000, 1300000, 1700000]; //custom visitors amounts
 
-    const colorScale = d3.scaleThreshold()//specific colors for specific group of visitor amount
+    const colorScale = d3.scaleThreshold()
         .domain(visitorFormat)
         .range(["#ffffff", "#f7fbff", "#e3eef9", "#cfe1f2", "#b5d4e9", "#93c3df", "#6daed5", "#4b97c9", "#2f7ebc", "#1864aa", "#0a4a90", "#08306b"]);
        
@@ -32,14 +30,12 @@ export function mapChart(data) {
         .scale([410])
         .translate([980, 770]);
 
-    //legend large screen
     const canvas2b = d3.select('.mapWrap')
         .append('svg')
         .attr('width', '130')
         .attr('height', '505')
         .attr('class', 'legend2');
 
-    // draw legend
     const squareSize = 25;
     canvas2b.selectAll('square')
         .append('g')
@@ -172,8 +168,8 @@ export function mapChart(data) {
             d3.selectAll('.path')
                 .data(dataSorted)
                 .style("fill", function (d) { return colorScale(parseInt(d.VALUE)) })
-                .on("mouseover", onMouseOver) // listener mouseover event
-                .on("mouseout", onMouseOut); // listener mouseleave event
+                .on("mouseover", onMouseOver) 
+                .on("mouseout", onMouseOut); 
 
         }));
     }));

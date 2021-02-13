@@ -16,7 +16,6 @@ export function barChart(data) {
         .attr('height', height + margin.top + margin.bottom)
         .attr('class', 'canvas1');
 
-    //variables
     const xScale = d3.scaleLinear()
         .rangeRound([0, width])
         .domain([0, data.length]);
